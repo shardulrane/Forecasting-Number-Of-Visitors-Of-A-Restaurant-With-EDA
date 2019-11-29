@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html >
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+<head>
+  <meta charset="UTF-8">
+  <title>EDA(R)</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+  
+</head>
+
+<body>
+  <center><h1><img src="{{ url_for('static', filename='eda_logo.jfif')}}" width="75" height="50">Output For Exploratory Data Analysis(R)</h1>
+  </center>
+
+<h2>1.Individual feature visualisations</h2>
+<p>Before combining them for a more detailed analysis, we have a first look at the feature distributions in our individual data files. This inital visualization will be the basis on which our analysis will be based.</p>
+<h3>1.1 Air Visits</h3>
+<p>We will start with the no of visits to the restaurants from the AIR app. Here we plot the total no of visitors/day over the full training time range together with the median visitors/day of the week, month & year:
+</p>
+<center><img src="{{ url_for('static', filename='images/eda_op/output1.png') }}" height="450">
+</center>
+<p>We Find:
+  <ul>
+<li><p>There is an interesting long-term step structure in the overall time series. This might be related to new restaurants being added to the data base. In addition, we already see a periodic pattern that most likely corresponds to a weekly cycle.</p></li>
+<li><p>The number of guests per visit per restaurant per day peaks at around 20 (the orange line). The distribution extends up to 100 and, in rare cases, beyond.</p></li>
+<li><p>Friday and the weekend appear to be the most popular days; which is to be expected. Monday and Tuesday have the lowest numbers of average visitors.</p></li>
+<li><p>Also during the year there is a certain amount of variation. Dec appears to be the most popular month for restaurant visits. The period of Mar - May is consistently busy.</p></li>
+</ul>
+</p>
+<p>We will be forecasting for the last week of April plus May 2017, so let’s look at this time range in our 2016 training data:</p>
+<center><img src="{{ url_for('static', filename='images/eda_op/output2.png') }}" height="450">
+</center>
+<p>Here, the black line is the date and the blue line corresponds to a smoothing fit with a corresponding grey confidence area. We see again the weekly period and also the impact of the aforementioned Golden Week, which in 2016 happened between Apr 29 and May 5.</p>
+<h3>1.2 Air Reservations</h3>
+<p>To see how our reservations data compares with the actual visitor no. We will start with the all the restaurants using air app and visualise their visitor volume through reservations/day, alongside the hours of these visits and the time between making a reservation and visiting the restaurant:
+</p>
+<center><img src="{{ url_for('static', filename='images/eda_op/output3.png') }}" height="450">
+</center>
+<p>From the above figure we observe that:
+<ul>
+<li><p>There were much fewer reservations made in 2016 through the <em>AIR APP</em> even none at all for a long stretch of time. The volume only increased during the end of that year. In 2017 the visitor no was powerful.</p></li>
+<li><p>Reservations are made typically for the dinner <em>hours</em> in the evening.</p></li>
+<li><p>The time, here shown in hours, between making a reservation and visiting the restaurant follow a nice 24-hour pattern. The most popular strategy is to reserve a couple of hours before the visit, but if the reservation is made more in advance then it seems to be common to book a table in the evening for one of the next evenings. This plot is truncated to show this pattern, which continues towards longer time scales. Very long time gaps between reservation and visit are not uncommon. Those are the most extreme values for the <em>air</em> data, up to more than a year in advance:</p></li>
+</ul>
+</p>
+<h3>1.3 Air Store</h3>
+
+<p>Plotting the numbers of different types of cuisines alongside the areas with the most restaurants registered on AIR app:
+</p>
+<center><img src="{{ url_for('static', filename='images/eda_op/output4.png') }}" height="450">
+</center>
+<p>We Observe That:</p>
+<ul>
+<li><p>There are lots of Izakaya Gastropubs in our data, followed by Cafe’s. We don’t have many Karaoke places in the AIR app data set and also only a few that describe themselves as generically “International” or “Asian”.</p></li>
+<li><p>Fukuoka has the largest number of AIR app restaurants/area, followed by many Tokyo areas.</p></li>
+</ul>
+<h2>2.Feature relations</h2>
+<h3>2.1 Visitors per genre</h3>
+<p>
+Our first plot of the multi-feature space deals with the average number of air restaurant visitors broken down by type of cuisine; i.e. the air_genre_name. We use a facet plot to distinguish the time series for the 14 categories. Note the logarithmic y-axis:
+</p>
+<center><img src="{{ url_for('static', filename='images/eda_op/output5.png') }}" height="450">
+</center>
+<h2>2.Holidays</h2>
+<h3>2.1 Impact Of Holidays</h3>
+<p>
+  We will study the influence of holidays on our visitor numbers by comparing the statistics for days with holidays vs those without holiday flag(Using box and whisker plot):
+</p>
+<center><img src="{{ url_for('static', filename='images/eda_op/output6.png') }}" height="450">
+</center>
+<p>
+The impact of holidays on the discrepancy between reservations and visitors. We’ll be using overlapping density plots:
+</p>
+<center><img src="{{ url_for('static', filename='images/eda_op/output7.png') }}" height="450">
+</center>
+<p>We Observe it</p>
+<ul>
+<li><p>Overall, holidays don’t have any impact on the average visitor numbers (left panel). As so often, more information is hidden in the details.</p></li>
+<li><p>While a weekend holiday has little impact on the visitor numbers, and even decreases them slightly, there is a much more pronounced effect for the weekdays; especially Monday and Tuesday (right panel).</p></li>
+</ul>
+
+
+
+
+<h4>
+<div align="right">
+<footer>
+
+  <p>Author: Shardul Rane</p>
+  <p>Date: 27 November 2019</p>
+  <p>Output: HTML Document</p>
+  <p>Contact information: <a href="mailto:shardul.rane@spit.ac.in">shardul.rane@spit.ac.in</a>.</p>
+</footer>
+</div>
+</h4>
+ </body>
+</html>

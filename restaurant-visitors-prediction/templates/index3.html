@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html >
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+<head>
+  <meta charset="UTF-8">
+  <title>ML API</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+  
+</head>
+
+<body>
+  <center>
+ <div class="login">
+	<h1>Restaurants Visitors Forecasting</h1>
+
+     <!-- Main Input For Receiving Query to our ML -->
+    <form action="{{ url_for('predict')}}"method="post">
+    	<input type="text" name="experience" placeholder="AIR Resturant ID" required="required" />
+      <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+    </form>
+ <h1> <img src="{{ url_for('static', filename='eda_logo.jfif')}}" width="75" height="50"><a href="{{ url_for('eda') }}">Exploratory Data Analysis Using R</a>
+    </h1>
+    
+ <table width="100%">
+<tr>
+<td rowspan="5"> {% for table in tables %}
+            {{titles[loop.index]}}
+            {{ table|safe }}
+{% endfor %}
+
+   {{ prediction_text }}</td>
+</tr>
+</table>
+
+      
+ </div>
+
+</center>
+</body>
+</html>
